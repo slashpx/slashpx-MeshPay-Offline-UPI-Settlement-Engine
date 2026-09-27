@@ -1,0 +1,17 @@
+# Render Blueprint — https://render.com/docs/blueprint-spec
+# Deploy with: Render Dashboard -> New -> Blueprint -> pick this repo.
+services:
+  - type: web
+    name: meshpay-upi-settlement
+    runtime: docker
+    plan: free
+    region: singapore          # closest Render region to India; also: oregon, frankfurt, ohio, virginia
+    branch: main
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /api/server-key
+    autoDeploy: true
+    envVars:
+      - key: SPRING_PROFILES_ACTIVE
+        value: prod
+      - key: H2_CONSOLE_ENABLED
+        value: "false"         # never expose the H2 console on a public URL
